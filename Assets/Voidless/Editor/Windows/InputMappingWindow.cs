@@ -71,6 +71,8 @@ public class InputMappingWindow : EditorWindow
 #endif
 		EditorGUILayout.EndHorizontal();
 
+		if(inputMapping == null) return;
+
 		for(int i = 0; i < inputMapping.PCControllerSetup.keyMapping.Length; i++)
 		{
 			EditorGUILayout.BeginHorizontal();
@@ -88,6 +90,8 @@ public class InputMappingWindow : EditorWindow
 	/// <summary>Draws Additional controller setup's configurations.</summary>
 	private void DrawAdditionalSettings()
 	{
+		if(inputMapping == null) return;
+
 		EditorGUILayout.Space();
 		EditorGUILayout.Space();
 		GUILayout.Label("Aditional XBox Controller Settings:");
@@ -170,6 +174,8 @@ public class InputMappingWindow : EditorWindow
 	/// <summary>Gets Max Length of the Keys of all possible controllers.</summary>
 	private int GetMaxLength()
 	{
+		if(inputMapping == null) return 0;
+
 		int maxSize = 0;
 
 		if(inputMapping.PCControllerSetup.keyMapping.Length > maxSize) maxSize = inputMapping.PCControllerSetup.keyMapping.Length;

@@ -237,6 +237,7 @@ public abstract class VCamera : Singleton<VCamera>
 	{
 		currentDistance = 0.0f;
 		rigidbody.isKinematic = true;
+		rigidbody.useGravity = false;
 		rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
 	}
 	

@@ -59,7 +59,6 @@ public class CameraDisplacementFollow : CameraFollow
 			break;
 		}
 
-		
 		voidlessCamera.rigidbody.MovePosition(position/* + (!viewportOffset.IsNaN() ? viewportOffset : Vector3.zero)*/);
 		
 		Debug.DrawRay(position, viewportOffset);

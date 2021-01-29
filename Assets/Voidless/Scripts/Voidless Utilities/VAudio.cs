@@ -5,6 +5,11 @@ using UnityEngine;
 
 namespace Voidless
 {
+/*
+	Play VS PlayOneShot:
+		- Play Stops the Audiosource, then plays the sound.
+		- PlayOneShot stacks sounds, but previous stacked sounds are not stopped.
+*/
 public static class VAudio
 {
 	/// <summary>Stops AudioSource, then assigns and plays AudioClip.</summary>
@@ -19,7 +24,7 @@ public static class VAudio
 		_audioSource.loop = _loop;
 	}
 
-	/// <summary>Stops AudioSource, then assigns and plays AudioClip.</summary>
+	/// <summary>Stacks and plays AudioClip.</summary>
 	/// <param name="_audioSource">AudioSource to play sound.</param>
 	/// <param name="_aucioClip">AudioClip to play.</param>
 	/// <param name="_volumeScale">Normalized Volume's Scale.</param>

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System;
 
 /*============================================================
@@ -550,6 +551,92 @@ public static class VCoroutines
 
 		_renderer.SetBlendShapeWeight(_index, _weight);
 		if(onSetEnds != null) onSetEnds();
+	}
+
+	/// <summary>Begins an Input Mashing Sequence.</summary>
+	/// <param name="key">KeyCode to press during the sequence.</param>
+	/// <param name="acceleration">Acceleration rate when the key is pressed in a frame (dividedd by the frame rate).</param>
+	/// <param name="decceleration">Decceleration rate when the key in not pressed in a frame (divided by the frame rate).</param>
+	/// <param name="minLimit">Minimum tolerance value.</param>
+	/// <param name="maxLimit">Max limit where the sequence is considered a success.</param>
+	/// <param name="onFailed">Optional Callback invoked when the sequence has failed [when the value passes the minimum limit].</param>
+	/// <param name="onSucceeded">Optional Callback invoked when the sequence has been successfully done.</param>
+	public static IEnumerator<float> InputMashingSequence(KeyCode key, float acceleration, float decceleration, float minLimit, float maxLimit, Action onFailed = null, Action onSucceeded = null)
+	{
+		float current = 0.0f;
+		float progress = 0.0f;
+		bool keyPressed = false;
+		bool keyPressedLastFrame = false;
+
+		while(current > minLimit && current < maxLimit)
+		{
+			keyPressed = Input.GetKeyDown(key);
+
+			if(!keyPressedLastFrame)
+			{
+				current += (keyPressed ? acceleration : -decceleration) * Time.deltaTime;
+				progress = Mathf.Clamp(VMath.RemapValueToNormalizedRange(current, minLimit, maxLimit), 0.0f, 1.0f);
+				keyPressedLastFrame = keyPressed;
+			}
+			else keyPressedLastFrame = false;
+
+			yield return progress;
+		}
+
+		if(current <= minLimit && onFailed != null)
+		{
+			progress = 0.0f;
+			onFailed();
+
+		} else if(current >= maxLimit && onSucceeded != null)
+		{
+			progress = 1.0f;
+			onSucceeded();
+		}
+	}
+
+	/// <summary>Begins an Input Mashing Sequence [With InputController's API].</summary>
+	/// <param name="inputID">KeyCode to press during the sequence.</param>
+	/// <param name="acceleration">Acceleration rate when the Input's ID is pressed in a frame (dividedd by the frame rate).</param>
+	/// <param name="decceleration">Decceleration rate when the Input's ID in not pressed in a frame (divided by the frame rate).</param>
+	/// <param name="minLimit">Minimum tolerance value.</param>
+	/// <param name="maxLimit">Max limit where the sequence is considered a success.</param>
+	/// <param name="onFailed">Optional Callback invoked when the sequence has failed [when the value passes the minimum limit].</param>
+	/// <param name="onSucceeded">Optional Callback invoked when the sequence has been successfully done.</param>
+	public static IEnumerator<float> InputMashingSequence(int inputID, float acceleration, float decceleration, float minLimit, float maxLimit, Action onFailed = null, Action onSucceeded = null)
+	{
+		if(InputController.Instance == null) yield break;
+
+		float current = 0.0f;
+		float progress = 0.0f;
+		bool inputEntered = false;
+		bool inputEnteredLastFrame = false;
+
+		while(current > minLimit && current < maxLimit)
+		{
+			inputEntered = InputController.InputBegin(inputID);
+
+			if(!inputEnteredLastFrame)
+			{
+				current += (inputEntered ? acceleration : -decceleration) * Time.deltaTime;
+				progress = Mathf.Clamp(VMath.RemapValueToNormalizedRange(current, minLimit, maxLimit), 0.0f, 1.0f);
+				inputEnteredLastFrame = inputEntered;
+			}
+			else inputEnteredLastFrame = false;
+
+			yield return progress;
+		}
+
+		if(current <= minLimit && onFailed != null)
+		{
+			progress = 0.0f;
+			onFailed();
+
+		} else if(current >= maxLimit && onSucceeded != null)
+		{
+			progress = 1.0f;
+			onSucceeded();
+		}
 	}
 #endregion
 

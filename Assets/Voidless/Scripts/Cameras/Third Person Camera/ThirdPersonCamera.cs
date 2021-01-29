@@ -62,13 +62,15 @@ public class ThirdPersonCamera : VCamera
 	/// <summary>Updates Camera.</summary>
 	protected override void UpdateCamera()
 	{
-		///...
+		orbitFollow.OnLateUpdate();
+		rotationFollow.OnLateUpdate();
 	}
 
 	/// <summary>Updates Camera on Physics' Thread.</summary>
 	protected override void FixedUpdateCamera()
 	{
-		///...
+		orbitFollow.OnFixedUpdate();
+		rotationFollow.OnFixedUpdate();
 	}
 }
 }
