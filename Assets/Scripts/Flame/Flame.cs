@@ -11,6 +11,7 @@ namespace Flamingo
 [RequireComponent(typeof(Light))]
 public class Flame : MonoBehaviour
 {
+	[SerializeField] private LayerMask _obstacleMask; 		/// <summary>Obstacle's LayerMask.</summary>
 	[SerializeField] private Vector3 _speed; 				/// <summary>Flame's Speed on its respective 3 axes.</summary>
 	[Space(5f)]
 	[Header("Light Emission's Attributes:")]
@@ -26,6 +27,9 @@ public class Flame : MonoBehaviour
 	private Coroutine emission; 							/// <summary>Emission's Coroutine Reference.</summary>
 
 #region Getters/Setters:
+	/// <summary>Gets obstacleMask property.</summary>
+	public LayerMask obstacleMask { get { return _obstacleMask; } }
+
 	/// <summary>Gets speed property.</summary>
 	public Vector3 speed { get { return _speed; } }
 
@@ -99,6 +103,19 @@ public class Flame : MonoBehaviour
 	private void FixedUpdate()
 	{
 		accumulator.AddDisplacement(transform.forward * speed.z);
+	}
+
+	/// <summary>Event triggered when this Collider enters another Collider trigger.</summary>
+	/// <param name="col">The other Collider involved in this Event.</param>
+	private void OnTriggerEnter(Collider col)
+	{
+		GameObject obj = col.gameObject;
+		int mask = 1 << obj.layer;
+		
+		if((obstacleMask | mask) == obstacleMask)
+		{
+			Destroy(gameObject);
+		}
 	}
 
 	/// <summary>Moves the Flame on the XY's plane.</summary>

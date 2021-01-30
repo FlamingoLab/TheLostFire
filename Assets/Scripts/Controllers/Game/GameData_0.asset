@@ -16,7 +16,6 @@ MonoBehaviour:
   _soundClips: []
   _particleEffects: []
   _obstacles:
-  - {fileID: 3899574259096277409, guid: a11b1fbff6ae89d42bc997941a64c4c9, type: 3}
   - {fileID: 6516208805179098516, guid: a21e3d732e206894cb8db05b53ed00f1, type: 3}
   - {fileID: 2774211801809978091, guid: 42bfeeadc48a2d24daf09b05506d0535, type: 3}
   - {fileID: 4855013231409686580, guid: cefd018f5d36d9a4585b3860585be48a, type: 3}

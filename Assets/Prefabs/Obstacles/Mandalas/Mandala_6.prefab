@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6235348082207158401}
   - component: {fileID: 6269511830900492477}
   - component: {fileID: 2948600114827266159}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Mandala_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _space: 1
-  _rotationAxes: {x: 0, y: 0, z: 45}
+  _rotationAxes: {x: 0, y: 0, z: 25}
 --- !u!1 &6945070025935988318
 GameObject:
   m_ObjectHideFlags: 0
@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 822867830914183624}
   - component: {fileID: 8179523394247664541}
   - component: {fileID: 3095097869909939223}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Group16196
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 2468240636472444969}
   - component: {fileID: 3926929606818844347}
   - component: {fileID: 1297795648279224618}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Group16186
   m_TagString: Untagged
   m_Icon: {fileID: 0}

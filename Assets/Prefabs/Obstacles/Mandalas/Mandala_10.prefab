@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1457538832662779555}
   - component: {fileID: 3070083380651238522}
   - component: {fileID: 2774211801809978091}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Mandala_10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _space: 1
-  _rotationAxes: {x: 0, y: 0, z: 70}
+  _rotationAxes: {x: 0, y: 0, z: 25}
 --- !u!114 &2774211801809978091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 1404573474070868065}
   - component: {fileID: 1894707080072084227}
   - component: {fileID: 1192452720527108453}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Group16841
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 1819458842279523092}
   - component: {fileID: 7521441194810201395}
   - component: {fileID: 1071516441632691034}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Colliders_Sides
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 5969386521308673093}
   - component: {fileID: 7445208706485327760}
   - component: {fileID: 7392320170318546772}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Colliders_Cross
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -395,7 +395,7 @@ GameObject:
   - component: {fileID: 6363032151286299092}
   - component: {fileID: 2907819817497123643}
   - component: {fileID: 2117911759418751992}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Group16851
   m_TagString: Untagged
   m_Icon: {fileID: 0}
