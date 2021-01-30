@@ -16,6 +16,9 @@ public class GameData : ScriptableObject
 	[Space(5f)]
 	[Header("Particle Effects:")]
 	[SerializeField] private ParticleEffect[] _particleEffects; 	/// <summary>Particles' Effects.</summary>
+	[Space(5f)]
+	[Header("Obstacles:")]
+	[SerializeField] private PoolGameObject[] _obstacles; 			/// <summary>Obstacle's Set.</summary>
 
 	/// <summary>Gets musicClips property.</summary>
 	public AudioClip[] musicClips { get { return _musicClips; } }
@@ -25,5 +28,8 @@ public class GameData : ScriptableObject
 
 	/// <summary>Gets particleEffects property.</summary>
 	public ParticleEffect[] particleEffects { get { return _particleEffects; } }
+
+	/// <summary>Gets obstacles property.</summary>
+	public PoolGameObject[] obstacles { get { return _obstacles; } }
 }
 }

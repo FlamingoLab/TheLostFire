@@ -6,14 +6,16 @@ using Voidless;
 
 public class TEST_ButtonMashing : MonoBehaviour
 {
-	[SerializeField] private KeyCode keyCode; 			/// <summary>KeyCode to Press.</summary>
-	[SerializeField] private int inputID; 				/// <summary>Input ID to Enter.</summary>
-	[SerializeField] private float acceleration; 		/// <summary>Acceleration's Rate.</summary>
-	[SerializeField] private float decceleration; 		/// <summary>Decceleration's Rate.</summary>
-	[SerializeField] private float minLimit; 			/// <summary>Minimum's Limit.</summary>
-	[SerializeField] private float maxLimit; 			/// <summary>Maximum's Limit.</summary>
-	private float progress; 							/// <summary>Current's Progress.</summary>
-	private IEnumerator<float> InputMashingSequence; 	/// <summary>Input Mashing Sequence's Iterator.</summary>
+	[SerializeField] private AnimatorCredential animationCredential; 	/// <summary>Animation's Credential.</summary>
+	[SerializeField] private Animator animator; 						/// <summary>Animator's Reference.</summary>
+	[SerializeField] private KeyCode keyCode; 							/// <summary>KeyCode to Press.</summary>
+	[SerializeField] private int inputID; 								/// <summary>Input ID to Enter.</summary>
+	[SerializeField] private float acceleration; 						/// <summary>Acceleration's Rate.</summary>
+	[SerializeField] private float decceleration; 						/// <summary>Decceleration's Rate.</summary>
+	[SerializeField] private float minLimit; 							/// <summary>Minimum's Limit.</summary>
+	[SerializeField] private float maxLimit; 							/// <summary>Maximum's Limit.</summary>
+	private float progress; 											/// <summary>Current's Progress.</summary>
+	private IEnumerator<float> InputMashingSequence; 					/// <summary>Input Mashing Sequence's Iterator.</summary>
 
 #region UnityMethods:
 	/// <summary>TEST_ButtonMashing's instance initialization.</summary>
@@ -35,6 +37,11 @@ public class TEST_ButtonMashing : MonoBehaviour
 		if(InputMashingSequence.MoveNext())
 		{
 			progress = InputMashingSequence.Current;
+			
+			if(animator == null) return;
+
+			//AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo();
+			animator.Play(animationCredential, 0, progress);
 		}
 	}
 #endregion

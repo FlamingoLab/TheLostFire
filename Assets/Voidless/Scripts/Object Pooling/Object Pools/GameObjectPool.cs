@@ -113,5 +113,24 @@ public class GameObjectPool<T> : BaseObjectPool<T> where T : MonoBehaviour, IPoo
 	{
 		_poolObject.transform.parent = poolGroup;
 	}
+
+	/// <summary>Creates an array of GameObjectPools from an array of PoolGameObjects.</summary>
+	/// <param name="_objects">Array of PoolGameObjects.</param>
+	/// <returns>Array of GameObjectPools from array of PoolGameObjects.</returns>
+	public static GameObjectPool<T>[] PopulatedPools(params T[] _objects)
+	{
+		if(_objects == null || _objects.Length == 0) return null;
+
+		int length = _objects.Length;
+
+		GameObjectPool<T>[] pools = new GameObjectPool<T>[length];
+
+		for(int i = 0; i < length; i++)
+		{
+			pools[i] = new GameObjectPool<T>(_objects[i]);
+		}
+
+		return pools;
+	}
 }
 }

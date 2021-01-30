@@ -1078,6 +1078,12 @@ public static class VMath
 		return f;
 	}
 
+	/// <returns>Random 0.0f-360.0f degree.</returns>
+	public static float RandomDegree()
+	{
+		return UnityEngine.Random.Range(0.0f, 360.0f);
+	}
+
 	/// <summary>Checks if to float values are equal [below or equal the difference tolerance].</summary>
 	/// <param name="_f1">First float value.</param>
 	/// <param name="_f2">Second float value.</param>
