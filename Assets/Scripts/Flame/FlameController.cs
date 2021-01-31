@@ -41,7 +41,7 @@ public class FlameController : Singleton<FlameController>
 		if(flame == null) return;
 		leftAxes = InputController.Instance.leftAxes;
 
-		if(InputController.InputBegin(lightEmissionID)) flame.EmitLight();
+		//if(InputController.InputBegin(lightEmissionID)) flame.EmitLight();
 	}
 
 	/// <summary>Updates FlameController's instance at each Physics Thread's frame.</summary>

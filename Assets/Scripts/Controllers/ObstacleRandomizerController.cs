@@ -75,11 +75,12 @@ public class ObstacleRandomizerController : Singleton<ObstacleRandomizerControll
    		//GenerateObstacleSet();
    	}
 
+   	/// <summary>Generates Pit Trail.</summary>
    	public void GeneratePitTrail()
    	{
    		float pitWidth = pitMeshRenderer.bounds.size.y;
    		float pitHalfWidth = (pitWidth * 0.5f);
-   		float flameSpeed = Game.flame.speed.z;
+   		float flameSpeed = Game.flame.speed.y;
    		float loopLength = /*Game.data.musicClips[loopID].length*/seconds;
    		trailLength = (loopLength * flameSpeed);
    		float width = Mathf.Ceil(trailLength / pitWidth);
@@ -95,6 +96,7 @@ public class ObstacleRandomizerController : Singleton<ObstacleRandomizerControll
    		}
    	}
 
+   	/// <summary>Generates obstacle trail considering a pit trail.</summary>
    	public void GenerateObstacleSetOnTrail()
    	{
    		float offset = 0.0f;
@@ -110,13 +112,13 @@ public class ObstacleRandomizerController : Singleton<ObstacleRandomizerControll
 			offset = separation.Random();
 			angle = VMath.RandomDegree();
 			obstacle = PoolManager.RequestObstacle(obstacleID, distance, Quaternion.identity);
-
-			obstacle.transform.localRotation = Quaternion.Euler(rotationAxis.normalized * angle);
+			obstacle.transform.localRotation *= Quaternion.Euler(rotationAxis.normalized * angle);
 			distance += directionAxis.normalized * offset;
 			accumulatedWeight += offset;
    		}
    	}
 
+   	/// <summary>Generates an obtacle set.</summary>
 	public void GenerateObstacleSet()
 	{
 		int length = obstaclesPerCreation.Random();
@@ -133,7 +135,7 @@ public class ObstacleRandomizerController : Singleton<ObstacleRandomizerControll
 			angle = VMath.RandomDegree();
 			obstacle = PoolManager.RequestObstacle(obstacleID, distance, Quaternion.identity);
 
-			obstacle.transform.localRotation = Quaternion.Euler(rotationAxis.normalized * angle);
+			obstacle.transform.localRotation *= Quaternion.Euler(rotationAxis.normalized * angle);
 			distance += directionAxis.normalized * offset;
 		}
 
