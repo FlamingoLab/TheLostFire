@@ -16,14 +16,15 @@ public class Flame : MonoBehaviour
 	[SerializeField] private Vector3 _speed; 				/// <summary>Flame's Speed on its respective 3 axes.</summary>
 	[Space(5f)]
 	[Header("Light Emission's Attributes:")]
+	[SerializeField] private float _lightOscillationSpeed; 	/// <summary>Light Oscillation's Speed.</summary>
 	[SerializeField] private float _emissionRadius; 		/// <summary>Emission's Radius.</summary>
 	[SerializeField] private float _emissionDuration; 		/// <summary>Emission's Duration.</summary>
 	[SerializeField] private float _suppressionDuration; 	/// <summary>Light's Suppression Duration.</summary>
 	[SerializeField] private float _maxPointWait; 			/// <summary>Wait duration when the emission reaches its highest point.</summary>
 	[SerializeField] private float _emissionCooldown; 		/// <summary>Emission's Cooldown Duration.</summary>
+	[SerializeField] private Light _light; 					/// <summary>Light's Component.</summary>
 	private Rigidbody _rigidbody; 							/// <summary>Rigidbody's Component.</summary>
 	private DisplacementAccumulator _accumulator; 			/// <summary>DisplacementAccumulator's Component.</summary>
-	private Light _light; 									/// <summary>Light's Component.</summary>
 	private SphereCollider _sphereCollider; 				/// <summary>SphereCollider's Component.</summary>
 	private Cooldown _cooldown; 							/// <summary>Light's Emission Cooldown.</summary>
 	private Coroutine emission; 							/// <summary>Emission's Coroutine Reference.</summary>
@@ -34,6 +35,9 @@ public class Flame : MonoBehaviour
 
 	/// <summary>Gets speed property.</summary>
 	public Vector3 speed { get { return _speed; } }
+
+	/// <summary>Gets lightOscillationSpeed property.</summary>
+	public float lightOscillationSpeed { get { return _lightOscillationSpeed; } }
 
 	/// <summary>Gets emissionRadius property.</summary>
 	public float emissionRadius { get { return _emissionRadius; } }
@@ -114,13 +118,14 @@ public class Flame : MonoBehaviour
 	/// <summary>Updates Flame's instance at each frame.</summary>
 	private void Update()
 	{
+		OscillateLightRange();
 		LimitOnPitRadius();
 	}
 
 	/// <summary>Updates Flame's instance at each Physics Thread's frame.</summary>
 	private void FixedUpdate()
 	{
-		accumulator.AddDisplacement(transform.forward * speed.z);
+		accumulator.AddDisplacement(transform.up * speed.y);
 	}
 
 	/// <summary>Event triggered when this Collider enters another Collider trigger.</summary>
@@ -139,28 +144,38 @@ public class Flame : MonoBehaviour
 	/// <summary>Limits Flame of Pit's Radius.</summary>
 	private void LimitOnPitRadius()
 	{
-		Vector3 direction = Vector3.zero.WithZ(transform.position.z) - transform.position;
+		Vector3 center = Vector3.zero.WithY(transform.position.y);
+		Vector3 direction = transform.position - center;
 		float limits = Game.data.limitRadius - sphereCollider.radius;
 
-		if(direction.sqrMagnitude >= (limits * limits)) transform.position = direction.normalized * limits;
+		if(direction.sqrMagnitude >= (limits * limits)) transform.position = center + (direction.normalized * limits);
 	}
 
 	/// <summary>Moves the Flame on the XY's plane.</summary>
 	/// <param name="_axes">Movement's Axes.</param>
 	public void Move(Vector2 _axes)
 	{
-		accumulator.AddDisplacement(transform.rotation * new Vector3(
-			_axes.x * speed.x,
-			_axes.y * speed.y,
-			0.0f)
-		);
+		if(!enabled) return;
+
+		Transform camera = ThirdPersonCamera.Instance.transform;
+		Vector3 movement = (camera.right * _axes.x * speed.x) + (camera.up * _axes.y * speed.z);
+		//movement = transform.rotation * new Vector3(_axes.x * speed.x, 0.0f, _axes.y * speed.z);
+		accumulator.AddDisplacement(movement);
 	}
 
 	/// <summary>Emits Light.</summary>
 	public void EmitLight()
 	{
+		if(!enabled) return;
+
 		if(emission == null)
 		this.StartCoroutine(LightEmission(), ref emission);
+	}
+
+	/// <summary>Oscillates Light's Range.</summary>
+	public void OscillateLightRange()
+	{
+		light.range = Mathf.Sin(Time.time * lightOscillationSpeed) * emissionRadius;
 	}
 
 	/// <summary>Callback internally called after the emission's cooldown ends.</summary>

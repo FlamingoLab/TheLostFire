@@ -162,12 +162,14 @@ MonoBehaviour:
   _obstacleMask:
     serializedVersion: 2
     m_Bits: 256
-  _speed: {x: 3, y: 3, z: 5}
-  _emissionRadius: 5
+  _speed: {x: 3, y: 5, z: 3}
+  _lightOscillationSpeed: 0.25
+  _emissionRadius: 15
   _emissionDuration: 1
   _suppressionDuration: 0.5
   _maxPointWait: 0.3
   _emissionCooldown: 5
+  _light: {fileID: 1591755288}
 --- !u!114 &6452997366213977868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,7 +189,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6452997366213977864}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
