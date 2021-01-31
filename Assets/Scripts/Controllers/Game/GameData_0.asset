@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16142d58e1a88d641929cfb593ce9a75, type: 3}
   m_Name: GameData_0
   m_EditorClassIdentifier: 
-  _musicClips: []
+  _limitRadius: 6.3
+  _musicClips:
+  - {fileID: 8300000, guid: 8f84cf4c1b992b74488bee06415003aa, type: 3}
+  - {fileID: 8300000, guid: 4528b03f57dc21044b7e612fbd9e070b, type: 3}
   _soundClips: []
   _particleEffects: []
   _obstacles:
@@ -21,3 +24,6 @@ MonoBehaviour:
   - {fileID: 4855013231409686580, guid: cefd018f5d36d9a4585b3860585be48a, type: 3}
   - {fileID: 5074694418846908974, guid: c46a4342620280744a8bed2072aa04ba, type: 3}
   - {fileID: 3138736320495225788, guid: fa5547ecf1d73e44abdec174b9191f14, type: 3}
+  - {fileID: 4828150874947537970, guid: 3786ca8b0d0695247992714b59f3bebe, type: 3}
+  - {fileID: 8675278499010261953, guid: 99b3af1c7b0720449bc7d311be3fac96, type: 3}
+  _pit: {fileID: 7504070563345534092, guid: a6d1659a9c3c1f34a9603e7f440433e6, type: 3}

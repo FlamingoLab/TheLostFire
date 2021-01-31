@@ -9,6 +9,7 @@ namespace Flamingo
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(DisplacementAccumulator))]
 [RequireComponent(typeof(Light))]
+[RequireComponent(typeof(SphereCollider))]
 public class Flame : MonoBehaviour
 {
 	[SerializeField] private LayerMask _obstacleMask; 		/// <summary>Obstacle's LayerMask.</summary>
@@ -23,6 +24,7 @@ public class Flame : MonoBehaviour
 	private Rigidbody _rigidbody; 							/// <summary>Rigidbody's Component.</summary>
 	private DisplacementAccumulator _accumulator; 			/// <summary>DisplacementAccumulator's Component.</summary>
 	private Light _light; 									/// <summary>Light's Component.</summary>
+	private SphereCollider _sphereCollider; 				/// <summary>SphereCollider's Component.</summary>
 	private Cooldown _cooldown; 							/// <summary>Light's Emission Cooldown.</summary>
 	private Coroutine emission; 							/// <summary>Emission's Coroutine Reference.</summary>
 
@@ -78,6 +80,16 @@ public class Flame : MonoBehaviour
 		}
 	}
 
+	/// <summary>Gets sphereCollider Component.</summary>
+	public SphereCollider sphereCollider
+	{ 
+		get
+		{
+			if(_sphereCollider == null) _sphereCollider = GetComponent<SphereCollider>();
+			return _sphereCollider;
+		}
+	}
+
 	/// <summary>Gets and Sets cooldown property.</summary>
 	public Cooldown cooldown
 	{
@@ -99,6 +111,12 @@ public class Flame : MonoBehaviour
 		cooldown = new Cooldown(this, emissionCooldown, OnCooldownEnds);
 	}
 
+	/// <summary>Updates Flame's instance at each frame.</summary>
+	private void Update()
+	{
+		LimitOnPitRadius();
+	}
+
 	/// <summary>Updates Flame's instance at each Physics Thread's frame.</summary>
 	private void FixedUpdate()
 	{
@@ -116,6 +134,15 @@ public class Flame : MonoBehaviour
 		{
 			Destroy(gameObject);
 		}
+	}
+
+	/// <summary>Limits Flame of Pit's Radius.</summary>
+	private void LimitOnPitRadius()
+	{
+		Vector3 direction = Vector3.zero.WithZ(transform.position.z) - transform.position;
+		float limits = Game.data.limitRadius - sphereCollider.radius;
+
+		if(direction.sqrMagnitude >= (limits * limits)) transform.position = direction.normalized * limits;
 	}
 
 	/// <summary>Moves the Flame on the XY's plane.</summary>

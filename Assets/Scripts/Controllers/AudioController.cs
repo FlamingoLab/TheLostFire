@@ -9,7 +9,11 @@ namespace Flamingo
 [RequireComponent(typeof(AudioSource))]
 public class AudioController : Singleton<AudioController>
 {
-	private AudioSource _audioSource; 	/// <summary>AudioSource's component.</summary>
+	[SerializeField] private CollectionIndex _loopID; 	/// <summary>Loop's ID.</summary>
+	private AudioSource _audioSource; 					/// <summary>AudioSource's component.</summary>
+
+	/// <summary>Gets loopID property.</summary>
+	public CollectionIndex loopID { get { return _loopID; } }
 
 	/// <summary>Gets audioSource Component.</summary>
 	public AudioSource audioSource
@@ -19,6 +23,12 @@ public class AudioController : Singleton<AudioController>
 			if(_audioSource == null) _audioSource = GetComponent<AudioSource>();
 			return _audioSource;
 		}
+	}
+
+	/// <summary>Callback invoked when scene loads, one frame before the first Update's tick.</summary>
+	private void Start()
+	{
+		audioSource.PlaySound(Game.data.musicClips[loopID]);
 	}
 
 	/*/// <summary>Stops AudioSource, then assigns and plays AudioClip.</summary>
